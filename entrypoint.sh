@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
+
 set -e
 
-rm -f /subscorp/tmp/pids/server.pid
+rm -f /myapp/tmp/pids/server.pid
 
 exec "$@"
-

@@ -1,27 +1,22 @@
 services:
   db:
     image: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-    volumes:
-      - ./tmp/db:/var/lib/postgresql/data
-    networks:
-      - db-tier
+    ports:
+      - "5432:5432"
+
   app:
     build: .
-    command: bash -c "bundle e rails s -p 3306 -b '0.0.0.0'"
+    volumes:
+      - .:/myapp-api
     ports:
-      - "3306:3306"
+      - "3000:3000"
     depends_on:
       - db
-    volumes:
-      - .:/subscorp
-    networks:
-      - app-tier
-      - db-tier
 
-networks:
-  app-tier: {}
-  db-tier: {}
-
+volumes:
+  db-data:
